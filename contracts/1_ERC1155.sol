@@ -41,9 +41,12 @@ contract ERC1155_Token is ERC1155, Ownable {
 
     // sets our URI and makes the ERC1155 OpenSea compatible
     function uri(uint256 _tokenid) override public view returns(string memory) {
+        require(_tokenid < tokenId, "Token ID is out of range");
         return string(
             abi.encodePacked(
-                tokenBaseURI[_tokenid]
+                tokenBaseURI[_tokenid],
+                Strings.toString(_tokenid + 1),
+                '.json'
             )
         );
     }
